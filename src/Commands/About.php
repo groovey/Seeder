@@ -1,4 +1,4 @@
-<?php namespace Groovey\Migration\Commands;
+<?php namespace Groovey\Seeder\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -14,7 +14,7 @@ class About extends Command
     protected function configure()
     {
         $this
-            ->setName('migrate:about')
+            ->setName('seed:about')
             ->setDescription('Shows credits to the author.')
         ;
     }
@@ -31,8 +31,8 @@ $about = <<<ABOUT
     \____/_/   \____/\____/|___/\___/\__, /
                                     /____/
 
-    Project Name: Groovey Migration
-    Git: https://github.com/groovey/migration
+    Project Name: Groovey Seeder
+    Git: https://github.com/groovey/seeder
     Author: Harold Kim Cantil <pokoot@gmail.com>
 
     Crafted with love.

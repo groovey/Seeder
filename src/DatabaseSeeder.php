@@ -12,7 +12,8 @@ class DatabaseSeeder
         return [
             new Commands\Init(),
             new Commands\Run(),
-            // new Commands\About()
+            new Commands\Create(),
+            new Commands\About()
         ];
     }
 
