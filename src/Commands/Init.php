@@ -37,7 +37,7 @@ class Init extends Command
         }
 
         if (file_exists($folder) && is_dir($folder)) {
-            $output->writeln("<error>Place all your seeder files in ($folder)</error>");
+            $output->writeln("<comment>Place all your seeder files in ($folder)</comment>");
         }
 
         $text = '<info>Sucessfully created seeder files.</info>';

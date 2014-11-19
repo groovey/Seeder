@@ -34,7 +34,7 @@ class Run extends Command
         $filename = getcwd() . "/database/seeds/{$class}.php";
 
         if (!$fs->exists($filename)) {
-            $output->writeln("<info>The seeder class does not exits.</info>");
+            $output->writeln("<error>The seeder class does not exits.</error>");
 
             return;
         }

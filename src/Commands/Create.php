@@ -19,7 +19,7 @@ class Create extends Command
     {
         $this
             ->setName('seed:create')
-            ->setDescription('Creates a seeder template.')
+            ->setDescription('Creates a template.')
             ->addArgument(
                 'class',
                 InputArgument::REQUIRED,
@@ -47,7 +47,10 @@ class Create extends Command
 
             $helper = $this->getHelper('question');
 
-            $question = new ConfirmationQuestion('The seeder file already exist, are you sure you want to replace it? (Y/N): ', false);
+            $question = new ConfirmationQuestion(
+                '<question>The seeder file already exist, are you sure you want to replace it? (Y/N):</question> ',
+                 false);
+
             if (!$helper->ask($input, $output, $question)) {
                 return;
             }
