@@ -5,12 +5,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
-use Symfony\Component\Yaml\Parser;
-use Illuminate\Database\Capsule\Manager as DB;
-use Groovey\Seeder\Adapters\Adapter;
-use Groovey\Migration\Manager;
-use Symfony\Component\Console\Helper\ProgressBar;
 
 class Run extends Command
 {
@@ -41,6 +35,7 @@ class Run extends Command
 
         if (!$fs->exists($filename)) {
             $output->writeln("<info>The seeder class does not exits.</info>");
+
             return;
         }
 

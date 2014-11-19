@@ -9,11 +9,9 @@ class DatabaseSeeder
 
     public function getCommands()
     {
-
         return [
             new Commands\Init(),
             new Commands\Run(),
-            // new Commands\Down($adapter),
             // new Commands\About()
         ];
     }

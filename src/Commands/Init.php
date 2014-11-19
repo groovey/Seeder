@@ -32,6 +32,7 @@ class Init extends Command
             $fs->mkdir($folder, 755);
         } catch (IOExceptionInterface $e) {
             $output->writeln("<error>An error occurred while creating your directory at {$e->getPath()}</error>");
+
             return;
         }
 
