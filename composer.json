@@ -1,0 +1,32 @@
+{
+    "name": "groovey/seeder",
+    "description": "A simple database seeder class. Auto populates your database with records.",
+    "license": "MIT",
+    "keywords": ["groovey", "framework", "simple", "seeder", "mysql seeder"],
+    "authors": [
+        {
+            "name": "Harold Kim Cantil",
+            "email": "pokoot@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/console": "*",
+        "symfony/yaml" : "*",
+        "symfony/config" : "*",
+        "symfony/finder" : "*",
+        "pimple/pimple" : "~3.0",
+        "illuminate/support": "*",
+        "illuminate/database": "~4.2",
+        "fzaninotto/faker": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.0.*",
+        "mockery/mockery" : "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Groovey\\Seeder\\": "src"
+        }
+    }
+
+}
