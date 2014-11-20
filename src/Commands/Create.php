@@ -39,8 +39,9 @@ class Create extends Command
         $file   = $dir . '/' . ucfirst($class) . '.php';
         $helper = $this->getHelper('question');
 
-        if (!$fs->exists($dir)){
+        if (!$fs->exists($dir)) {
             $output->writeln('<error>The seeds directory does not exist. Make sure you run groovey seed:init first.</error>');
+
             return;
         }
 

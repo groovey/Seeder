@@ -61,6 +61,7 @@ Change the default parameters of the database to your environment settings.
 
 ```php
 <?php
+
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 $capsule = new Capsule;
