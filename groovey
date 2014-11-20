@@ -18,4 +18,4 @@ $app->addCommands(
 
 $status = $app->run();
 
-exit($stat);
+exit($status);
