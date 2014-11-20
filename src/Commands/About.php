@@ -23,14 +23,14 @@ class About extends Command
     {
 
 $about = <<<ABOUT
-
+    <comment>
        ______
       / ____/________  ____ _   _____  __  __
      / / __/ ___/ __ \/ __ \ | / / _ \/ / / /
     / /_/ / /  / /_/ / /_/ / |/ /  __/ /_/ /
     \____/_/   \____/\____/|___/\___/\__, /
                                     /____/
-
+    </comment>
     Project Name: Groovey Seeder
     Git: https://github.com/groovey/seeder
     Author: Harold Kim Cantil <pokoot@gmail.com>

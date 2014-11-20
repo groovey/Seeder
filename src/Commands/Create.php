@@ -35,17 +35,16 @@ class Create extends Command
         $loader = new \Twig_Loader_Filesystem(__DIR__. '/../Template/');
         $twig   = new \Twig_Environment($loader);
         $fs     = new Filesystem();
+        $dir    = getcwd() . '/database/seeds';
+        $file   = $dir . '/' . ucfirst($class) . '.php';
+        $helper = $this->getHelper('question');
 
-        $contents = $twig->render('template.twig', [
-            'class' => ucfirst($class),
-            'table' => strtolower($class)
-        ]);
-
-        $file = getcwd() . '/database/seeds/' . ucfirst($class) . '.php';
+        if (!$fs->exists($dir)){
+            $output->writeln('<error>The seeds directory does not exist. Make sure you run groovey seed:init first.</error>');
+            return;
+        }
 
         if ($fs->exists($file)) {
-
-            $helper = $this->getHelper('question');
 
             $question = new ConfirmationQuestion(
                 '<question>The seeder file already exist, are you sure you want to replace it? (Y/N):</question> ',
@@ -56,9 +55,14 @@ class Create extends Command
             }
         }
 
+        $contents = $twig->render('template.twig', [
+            'class' => ucfirst($class),
+            'table' => strtolower($class)
+        ]);
+
         file_put_contents($file, $contents);
 
-        $text = '<info>Sucessfully created seed file.</info>';
+        $text = '<info>Sucessfully created seed directory.</info>';
         $output->writeln($text);
     }
 
