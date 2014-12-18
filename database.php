@@ -7,9 +7,9 @@ $capsule = new Capsule;
 $capsule->addConnection([
     'driver'    => 'mysql',
     'host'      => 'localhost',
-    'database'  => 'groovey',
+    'database'  => 'seeder',
     'username'  => 'root',
-    'password'  => '1234567890',
+    'password'  => 'webdevel',
     'charset'   => 'utf8',
     'collation' => 'utf8_general_ci',
     'prefix'    => ''

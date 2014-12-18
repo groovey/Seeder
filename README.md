@@ -12,7 +12,7 @@ A simple database seeder class with progress bar. Auto populates your database w
 ![alt tag](https://raw.githubusercontent.com/groovey/Seeder/master/groovey.jpg)
 
 
-## Installation
+## Step 1 - Installation
 
 Install using composer. To learn more about composer, visit: https://getcomposer.org/
 
@@ -27,9 +27,9 @@ Install using composer. To learn more about composer, visit: https://getcomposer
 Then run `composer.phar` update.
 
 
-## The Groovey File
+## Step 2 - The Groovey File
 
-On your project root folder. Create a file called `groovey`. Or this could be any project name like `awesome`. Then  paste the code below.
+On your project root folder. Create a file called `groovey`.
 
 ```php
 #!/usr/bin/env php
@@ -55,7 +55,7 @@ $status = $app->run();
 exit($status);
 ```
 
-## The Database Bootstrap File
+## Step 3 - The Database Bootstrap File
 
 Change the default parameters of the database to your environment settings.
 
@@ -69,9 +69,9 @@ $capsule = new Capsule;
 $capsule->addConnection([
     'driver'    => 'mysql',
     'host'      => 'localhost',
-    'database'  => 'groovey',
+    'database'  => 'seeder',
     'username'  => 'root',
-    'password'  => 'awesome',
+    'password'  => 'webdevel',
     'charset'   => 'utf8',
     'collation' => 'utf8_general_ci',
     'prefix'    => ''
@@ -85,19 +85,24 @@ return $capsule;
 
 Great! Spam your database now.
 
-## Init
+## Step 4 - Init
 
 Setup your seeder directory relative to your root folder `./database/seeds`.
 
-    $ groovey seed:Init
+    $ groovey seed:init
 
-## Create
+## Step 5 - Create
 
 Automatically creates a sample seeder class.
 
     $ groovey seed:create Test
 
-## Run
+## Step 6 - Create Test Database
+
+* Define your mysql test table
+* Edit your `Test` class
+
+## Step 6 - Run
 
 Runs the seeder class
 
