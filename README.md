@@ -108,9 +108,6 @@ Runs the seeder class
 
     $ groovey seed:run Test
 
-And yes! it only takes 3 commands to master the `groovey seeder`.
-
-
 ## Seeder Class
 
 Here is a sample working seeder class.
