@@ -1,8 +1,9 @@
-<?php namespace Groovey\Seeder;
+<?php
+
+namespace Groovey\Seeder;
 
 class DatabaseSeeder
 {
-
     public function __construct()
     {
     }
@@ -13,8 +14,7 @@ class DatabaseSeeder
             new Commands\Init(),
             new Commands\Run(),
             new Commands\Create(),
-            new Commands\About()
+            new Commands\About(),
         ];
     }
-
 }

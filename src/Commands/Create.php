@@ -1,4 +1,6 @@
-<?php namespace Groovey\Seeder\Commands;
+<?php
+
+namespace Groovey\Seeder\Commands;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -9,7 +11,6 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class Create extends Command
 {
-
     public function __construct()
     {
         parent::__construct();
@@ -30,13 +31,12 @@ class Create extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
-        $class  = $input->getArgument('class');
-        $loader = new \Twig_Loader_Filesystem(__DIR__. '/../Template/');
-        $twig   = new \Twig_Environment($loader);
-        $fs     = new Filesystem();
-        $dir    = getcwd() . '/database/seeds';
-        $file   = $dir . '/' . ucfirst($class) . '.php';
+        $class = $input->getArgument('class');
+        $loader = new \Twig_Loader_Filesystem(__DIR__.'/../Template/');
+        $twig = new \Twig_Environment($loader);
+        $fs = new Filesystem();
+        $dir = getcwd().'/database/seeds';
+        $file = $dir.'/'.ucfirst($class).'.php';
         $helper = $this->getHelper('question');
 
         if (!$fs->exists($dir)) {
@@ -46,7 +46,6 @@ class Create extends Command
         }
 
         if ($fs->exists($file)) {
-
             $question = new ConfirmationQuestion(
                 '<question>The seeder file already exist, are you sure you want to replace it? (Y/N):</question> ',
                  false);
@@ -58,7 +57,7 @@ class Create extends Command
 
         $contents = $twig->render('template.twig', [
             'class' => ucfirst($class),
-            'table' => strtolower($class)
+            'table' => strtolower($class),
         ]);
 
         file_put_contents($file, $contents);
@@ -66,5 +65,4 @@ class Create extends Command
         $text = '<info>Sucessfully created seed directory.</info>';
         $output->writeln($text);
     }
-
 }

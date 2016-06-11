@@ -22,7 +22,6 @@ class Seeder
 
     public function seed($func, $total = 1, $truncate = false)
     {
-
         $progress = new ProgressBar($this->output, $total);
 
         if ($truncate) {
@@ -48,7 +47,5 @@ class Seeder
         $progress->finish();
 
         $this->output->writeln("\n<info>End seeding.</info>");
-
     }
-
 }

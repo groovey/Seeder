@@ -1,6 +1,7 @@
 <?php
 
-class {{class}} extends Seeder {
+class {{class}} extends Seeder
+{
 
     public $table = '{{table}}';
 
@@ -14,8 +15,8 @@ class {{class}} extends Seeder {
             $faker->seed($counter);
 
             return [
-                'name'       => $faker->name,
-                'email'      => $faker->email,
+                'name' => $faker->name,
+                'email' => $faker->email,
                 'created_at' => $faker->dateTimeThisMonth()
             ];
 

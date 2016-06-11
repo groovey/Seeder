@@ -3,18 +3,18 @@
 
 set_time_limit(0);
 
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/database.php';
+require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/database.php';
 
 use Symfony\Component\Console\Application;
 use Groovey\Seeder\DatabaseSeeder;
 
-$seeder  = new DatabaseSeeder();
-$app     = new Application;
+$seeder = new DatabaseSeeder();
+$app = new Application();
 
 $app->addCommands(
         $seeder->getCommands()
-	);
+    );
 
 $status = $app->run();
 
