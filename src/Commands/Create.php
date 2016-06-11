@@ -20,7 +20,7 @@ class Create extends Command
     {
         $this
             ->setName('seed:create')
-            ->setDescription('Creates a template.')
+            ->setDescription('Creates a seeder class template.')
             ->addArgument(
                 'class',
                 InputArgument::REQUIRED,
@@ -62,7 +62,6 @@ class Create extends Command
 
         file_put_contents($file, $contents);
 
-        $text = '<info>Sucessfully created seed directory.</info>';
-        $output->writeln($text);
+        $output->writeln('<info>Sucessfully created seed directory.</info>');
     }
 }

@@ -19,7 +19,7 @@ class Init extends Command
     {
         $this
             ->setName('seed:init')
-            ->setDescription('Setup your seeder directory.')
+            ->setDescription('Setup your database/seeds directory.')
         ;
     }
 
@@ -40,8 +40,6 @@ class Init extends Command
             $output->writeln("<comment>Place all your seeder files in ($folder)</comment>");
         }
 
-        $text = '<info>Sucessfully created seeder files.</info>';
-
-        $output->writeln($text);
+        $output->writeln('<info>Sucessfully created seeder folder.</info>');
     }
 }
