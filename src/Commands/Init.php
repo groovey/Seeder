@@ -25,7 +25,7 @@ class Init extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $fs = new Filesystem();
+        $fs     = new Filesystem();
         $folder = getcwd().'/database/seeds';
 
         try {

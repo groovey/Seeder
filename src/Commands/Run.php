@@ -30,8 +30,8 @@ class Run extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $fs = new Filesystem();
-        $class = $input->getArgument('class');
+        $class    = $input->getArgument('class');
+        $fs       = new Filesystem();
         $filename = getcwd()."/database/seeds/{$class}.php";
 
         if (!$fs->exists($filename)) {

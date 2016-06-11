@@ -10,7 +10,7 @@ use Symfony\Component\Console\Application;
 use Groovey\Seeder\DatabaseSeeder;
 
 $seeder = new DatabaseSeeder();
-$app = new Application();
+$app    = new Application();
 
 $app->addCommands(
         $seeder->getCommands()

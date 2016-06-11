@@ -31,12 +31,12 @@ class Create extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $class = $input->getArgument('class');
+        $class  = $input->getArgument('class');
         $loader = new \Twig_Loader_Filesystem(__DIR__.'/../Template/');
-        $twig = new \Twig_Environment($loader);
-        $fs = new Filesystem();
-        $dir = getcwd().'/database/seeds';
-        $file = $dir.'/'.ucfirst($class).'.php';
+        $twig   = new \Twig_Environment($loader);
+        $fs     = new Filesystem();
+        $dir    = getcwd().'/database/seeds';
+        $file   = $dir.'/'.ucfirst($class).'.php';
         $helper = $this->getHelper('question');
 
         if (!$fs->exists($dir)) {
