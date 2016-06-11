@@ -37,14 +37,14 @@ On your project root folder. Create a file called `groovey`.
 
 set_time_limit(0);
 
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/database.php';
+require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/database.php';
 
 use Symfony\Component\Console\Application;
 use Groovey\Seeder\DatabaseSeeder;
 
-$seeder  = new DatabaseSeeder();
-$app     = new Application;
+$seeder = new DatabaseSeeder();
+$app    = new Application();
 
 $app->addCommands(
         $seeder->getCommands()
@@ -64,7 +64,7 @@ Change the default parameters of the database to your environment settings.
 
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-$capsule = new Capsule;
+$capsule = new Capsule();
 
 $capsule->addConnection([
     'driver'    => 'mysql',
@@ -74,7 +74,7 @@ $capsule->addConnection([
     'password'  => 'webdevel',
     'charset'   => 'utf8',
     'collation' => 'utf8_general_ci',
-    'prefix'    => ''
+    'prefix'    => '',
 ], 'default');
 
 $capsule->bootEloquent();
