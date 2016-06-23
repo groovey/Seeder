@@ -14,10 +14,8 @@
         "symfony/yaml" : "*",
         "symfony/config" : "*",
         "symfony/finder" : "*",
-        "pimple/pimple" : "~3.0",
-        "twig/twig" : "~1.0",
-        "illuminate/support": "*",
-        "illuminate/database": "~4.2",
+        "twig/twig" : "*",
+        "illuminate/database": "*",
         "fzaninotto/faker": "*"
     },
     "require-dev": {
