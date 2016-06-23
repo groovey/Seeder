@@ -10,13 +10,10 @@
         }
     ],
     "require": {
-        "symfony/console": "*",
-        "symfony/yaml" : "*",
-        "symfony/config" : "*",
-        "symfony/finder" : "*",
-        "twig/twig" : "*",
-        "illuminate/database": "*",
-        "fzaninotto/faker": "*"
+        "symfony/console": "~3.0",
+        "twig/twig" : "~1.24",
+        "illuminate/database": "~5.2",
+        "fzaninotto/faker": "~1.6"
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",
