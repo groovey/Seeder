@@ -17,7 +17,7 @@ class {{class}} extends Seeder
             return [
                 'name' => $faker->name,
                 'email' => $faker->email,
-                'created_at' => $faker->dateTimeThisMonth()
+                'created_at' => $faker->date('Y-m-d H-m-s', 'now')
             ];
 
         }, 100, $truncate = true);

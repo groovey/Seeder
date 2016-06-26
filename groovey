@@ -4,17 +4,31 @@
 set_time_limit(0);
 
 require_once __DIR__.'/vendor/autoload.php';
-require_once __DIR__.'/database.php';
 
 use Symfony\Component\Console\Application;
-use Groovey\Seeder\DatabaseSeeder;
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\DriverManager;
 
-$seeder = new DatabaseSeeder();
+$db = [
+        'dbname'   => 'seeder',
+        'user'     => 'root',
+        'password' => 'webdevel',
+        'host'     => 'localhost',
+        'driver'   => 'pdo_mysql',
+    ];
+
+$config = new Configuration();
+$conn   = DriverManager::getConnection($db, $config);
 $app    = new Application();
 
-$app->addCommands(
-        $seeder->getCommands()
-    );
+$container['db'] = $conn;
+
+$app->addCommands([
+        new Groovey\Seeder\Commands\About(),
+        new Groovey\Seeder\Commands\Init($container),
+        new Groovey\Seeder\Commands\Create($container),
+        new Groovey\Seeder\Commands\Run($container),
+    ]);
 
 $status = $app->run();
 

@@ -11,9 +11,11 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class Create extends Command
 {
-    public function __construct()
+    private $app;
+    public function __construct($app)
     {
         parent::__construct();
+        $this->app = $app;
     }
 
     protected function configure()

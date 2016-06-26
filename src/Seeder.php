@@ -2,30 +2,34 @@
 
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
-use Illuminate\Database\Capsule\Manager as DB;
 
 class Seeder
 {
     public $table;
     public $faker;
     public $output;
+    public $app;
 
     public function __construct()
     {
         $this->faker = Faker\Factory::create();
     }
 
-    public function inject(OutputInterface $output)
+    public function inject(OutputInterface $output, $app)
     {
         $this->output = $output;
+        $this->app    = $app;
     }
 
     public function seed($func, $total = 1, $truncate = false)
     {
+        $app      = $this->app;
         $progress = new ProgressBar($this->output, $total);
 
         if ($truncate) {
-            DB::table($this->table)->truncate();
+            $query = 'TRUNCATE '.$this->table;
+            $app['db']->executeQuery($query);
+
             $this->output->writeln('<info>Truncated table.</info>');
         }
 
@@ -35,11 +39,9 @@ class Seeder
 
         $cnt = 0;
         while ($cnt++ < $total) {
-            $obj = $func($cnt, $this->output);
+            $data = $func($cnt, $this->output);
 
-            DB::table($this->table)->insert(
-                $obj
-            );
+            $app['db']->insert($this->table, $data);
 
             $progress->advance();
         }

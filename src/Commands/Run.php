@@ -10,9 +10,11 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class Run extends Command
 {
-    public function __construct()
+    private $app;
+    public function __construct($app)
     {
         parent::__construct();
+        $this->app = $app;
     }
 
     protected function configure()
@@ -45,7 +47,7 @@ class Run extends Command
 
         $instance = new $class();
 
-        $instance->inject($output);
+        $instance->inject($output, $this->app);
         $instance->run();
     }
 }

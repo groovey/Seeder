@@ -10,9 +10,12 @@ use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class Init extends Command
 {
-    public function __construct()
+    private $app;
+
+    public function __construct($app)
     {
         parent::__construct();
+        $this->app = $app;
     }
 
     protected function configure()
