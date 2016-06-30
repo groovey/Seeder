@@ -1,5 +1,5 @@
 ## Groovey Seeder
-=================
+===========
 
 A simple database seeder class with progress bar.
 
@@ -90,7 +90,7 @@ Runs the seeder class
 
 ## Seeder Class
 
-Here is a sample working seeder class.
+A sample working seeder class.
 
 ```php
 <?php
