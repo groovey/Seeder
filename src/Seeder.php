@@ -42,7 +42,7 @@ class Seeder
             $data = $func($cnt, $this->output);
 
             DB::table($this->table)->insert(
-                $obj
+                $data
             );
 
             $progress->advance();
