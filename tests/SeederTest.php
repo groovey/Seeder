@@ -63,6 +63,8 @@ class SeederTest extends PHPUnit_Framework_TestCase
                 'class'   => 'Users',
             ]);
 
+        $this->assertRegExp('/End seeding/', $tester->getDisplay());
+
         Database::drop();
     }
 }
