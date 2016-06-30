@@ -1,7 +1,7 @@
-Groovey Seeder
-==============
+## Groovey Seeder
+=================
 
-A simple database seeder class with progress bar. Auto populates your database with fake records instantly. Less coding required, just filling your database field values. Currently supports four database system Mysql, Postgress, SQLite and SQL servers.
+A simple database seeder class with progress bar.
 
 ## Usage
 
@@ -12,16 +12,11 @@ A simple database seeder class with progress bar. Auto populates your database w
 ![alt tag](https://raw.githubusercontent.com/groovey/Seeder/master/groovey.jpg)
 
 
-## Step 1 - Installation
+## Installation
 
-Install using composer. To learn more about composer, visit: https://getcomposer.org/
+    $ composer require groovey/seeder
 
-     $ composer requre groovey/seeder 
-
-Then run `composer.phar` update.
-
-
-## Step 2 - The Groovey File
+## Usage
 
 On your project root folder. Create a file called `groovey`.
 
@@ -34,22 +29,27 @@ set_time_limit(0);
 require_once __DIR__.'/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
-use Doctrine\DBAL\Configuration;
-use Doctrine\DBAL\DriverManager;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
-$db = [
-        'dbname'   => 'test',
-        'user'     => 'root',
-        'password' => 'webdevel',
-        'host'     => 'localhost',
-        'driver'   => 'pdo_mysql',
-    ];
+$capsule = new Capsule();
 
-$config = new Configuration();
-$conn   = DriverManager::getConnection($db, $config);
-$app    = new Application();
+$capsule->addConnection([
+    'driver'    => 'mysql',
+    'host'      => 'localhost',
+    'database'  => 'test',
+    'username'  => 'root',
+    'password'  => '',
+    'charset'   => 'utf8',
+    'collation' => 'utf8_general_ci',
+    'prefix'    => '',
+], 'default');
 
-$container['db'] = $conn;
+$capsule->bootEloquent();
+$capsule->setAsGlobal();
+
+$container['db'] = $capsule;
+
+$app = new Application();
 
 $app->addCommands([
         new Groovey\Seeder\Commands\About(),
@@ -61,7 +61,6 @@ $app->addCommands([
 $status = $app->run();
 
 exit($status);
-
 ```
 
 Great! Spam your database now.
@@ -96,15 +95,12 @@ Here is a sample working seeder class.
 ```php
 <?php
 
-
 class Test extends Seeder
 {
-
     public $table = 'test';
 
     public function run()
     {
-
         $faker = $this->faker;
 
         $this->seed(function ($counter, $output) use ($faker) {
@@ -114,7 +110,7 @@ class Test extends Seeder
             return [
                 'name' => $faker->name,
                 'email' => $faker->email,
-                'created_at' => $faker->date('Y-m-d H-m-s', 'now')
+                'created_at' => $faker->dateTimeThisMonth(),
             ];
 
         }, 100, $truncate = true);
@@ -122,12 +118,5 @@ class Test extends Seeder
         return;
     }
 }
+
 ```
-
-## Like Us.
-
-Give a `star` to show your support and love for the project.
-
-## Contribution
-
-Fork `Groovey Seeder` and send us some issues.
