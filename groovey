@@ -6,22 +6,27 @@ set_time_limit(0);
 require_once __DIR__.'/vendor/autoload.php';
 
 use Symfony\Component\Console\Application;
-use Doctrine\DBAL\Configuration;
-use Doctrine\DBAL\DriverManager;
+use Illuminate\Database\Capsule\Manager as Capsule;
 
-$db = [
-        'dbname'   => 'test',
-        'user'     => 'root',
-        'password' => 'webdevel',
-        'host'     => 'localhost',
-        'driver'   => 'pdo_mysql',
-    ];
+$capsule = new Capsule();
 
-$config = new Configuration();
-$conn   = DriverManager::getConnection($db, $config);
-$app    = new Application();
+$capsule->addConnection([
+    'driver'    => 'mysql',
+    'host'      => 'localhost',
+    'database'  => 'test',
+    'username'  => 'root',
+    'password'  => '',
+    'charset'   => 'utf8',
+    'collation' => 'utf8_general_ci',
+    'prefix'    => '',
+], 'default');
 
-$container['db'] = $conn;
+$capsule->bootEloquent();
+$capsule->setAsGlobal();
+
+$container['db'] = $capsule;
+
+$app = new Application();
 
 $app->addCommands([
         new Groovey\Seeder\Commands\About(),
