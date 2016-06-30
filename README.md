@@ -16,13 +16,7 @@ A simple database seeder class with progress bar. Auto populates your database w
 
 Install using composer. To learn more about composer, visit: https://getcomposer.org/
 
-```json
-{
-    "require": {
-        "groovey/seeder": "~1.0"
-    }
-}
-```
+     $ composer requre groovey/seeder 
 
 Then run `composer.phar` update.
 
@@ -38,71 +32,58 @@ On your project root folder. Create a file called `groovey`.
 set_time_limit(0);
 
 require_once __DIR__.'/vendor/autoload.php';
-require_once __DIR__.'/database.php';
 
 use Symfony\Component\Console\Application;
-use Groovey\Seeder\DatabaseSeeder;
+use Doctrine\DBAL\Configuration;
+use Doctrine\DBAL\DriverManager;
 
-$seeder = new DatabaseSeeder();
+$db = [
+        'dbname'   => 'test',
+        'user'     => 'root',
+        'password' => 'webdevel',
+        'host'     => 'localhost',
+        'driver'   => 'pdo_mysql',
+    ];
+
+$config = new Configuration();
+$conn   = DriverManager::getConnection($db, $config);
 $app    = new Application();
 
-$app->addCommands(
-        $seeder->getCommands()
-    );
+$container['db'] = $conn;
+
+$app->addCommands([
+        new Groovey\Seeder\Commands\About(),
+        new Groovey\Seeder\Commands\Init($container),
+        new Groovey\Seeder\Commands\Create($container),
+        new Groovey\Seeder\Commands\Run($container),
+    ]);
 
 $status = $app->run();
 
 exit($status);
-```
 
-## Step 3 - The Database Bootstrap File
-
-Change the default parameters of the database to your environment settings.
-
-```php
-<?php
-
-use Illuminate\Database\Capsule\Manager as Capsule;
-
-$capsule = new Capsule();
-
-$capsule->addConnection([
-    'driver'    => 'mysql',
-    'host'      => 'localhost',
-    'database'  => 'seeder',
-    'username'  => 'root',
-    'password'  => 'webdevel',
-    'charset'   => 'utf8',
-    'collation' => 'utf8_general_ci',
-    'prefix'    => '',
-], 'default');
-
-$capsule->bootEloquent();
-$capsule->setAsGlobal();
-
-return $capsule;
 ```
 
 Great! Spam your database now.
 
-## Step 4 - Init
+## Init
 
 Setup your seeder directory relative to your root folder `./database/seeds`.
 
     $ groovey seed:init
 
-## Step 5 - Create
+## Create
 
 Automatically creates a sample seeder class.
 
     $ groovey seed:create Test
 
-## Step 6 - Create Test Database
+## Create Test Database
 
 * Define your mysql test table
 * Edit your `Test` class
 
-## Step 6 - Run
+## Run
 
 Runs the seeder class
 
@@ -115,7 +96,9 @@ Here is a sample working seeder class.
 ```php
 <?php
 
-class Test extends Seeder {
+
+class Test extends Seeder
+{
 
     public $table = 'test';
 
@@ -129,16 +112,15 @@ class Test extends Seeder {
             $faker->seed($counter);
 
             return [
-                'name'       => $faker->name,
-                'email'      => $faker->email,
-                'created_at' => $faker->dateTimeThisMonth()
+                'name' => $faker->name,
+                'email' => $faker->email,
+                'created_at' => $faker->date('Y-m-d H-m-s', 'now')
             ];
 
         }, 100, $truncate = true);
 
         return;
     }
-
 }
 ```
 
