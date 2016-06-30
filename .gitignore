@@ -1,4 +1,3 @@
-/database/*
 /vendor
 composer.phar
 composer.lock
