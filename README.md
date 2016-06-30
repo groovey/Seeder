@@ -15,7 +15,7 @@ A simple database seeder class with progress bar.
 
     $ composer require groovey/seeder
 
-## Usage
+## Setup
 
 On your project root folder. Create a file called `groovey`.
 
