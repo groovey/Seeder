@@ -1,6 +1,6 @@
-# Groovey Seeder
+# Seeder
 
-A simple database seeder class with progress bar.
+Groovey Seeder Package
 
 ## Usage
 
