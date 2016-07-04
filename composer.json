@@ -1,6 +1,6 @@
 {
     "name": "groovey/seeder",
-    "description": "Automagically populates your database with records.",
+    "description": "Groovey Seeder Package.",
     "license": "MIT",
     "keywords": ["groovey", "framework", "simple", "seeder", "mysql"],
     "authors": [
