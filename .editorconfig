@@ -1,0 +1,9 @@
+root = true
+
+# By default, use Linux line endings (matches our .gitattributes settings)
+# Ensure file ends in a newline
+[*]
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+charset = utf-8
