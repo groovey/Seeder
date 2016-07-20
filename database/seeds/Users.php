@@ -11,12 +11,13 @@ class Users extends Seeder
         $this->seed(function ($counter, $output) use ($faker) {
 
             $faker->seed($counter);
-            $status = ['ACTIVE', 'INACTIVE'];
+
+            $status = ['active', 'inactive'];
 
             return [
-                'status' => $status[array_rand($status)],
-                'name' => $faker->name,
-                'email' => $faker->email,
+                'status'     => $status[array_rand($status)],
+                'name'       => $faker->name,
+                'email'      => $faker->email,
                 'created_at' => $faker->dateTimeThisMonth(),
             ];
 
