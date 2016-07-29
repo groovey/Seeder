@@ -6,11 +6,6 @@ Groovey Seeder Package
 
     $ groovey seed:run Test
 
-## See It In Action
-
-![alt tag](https://raw.githubusercontent.com/groovey/Seeder/master/groovey.jpg)
-
-
 ## Installation
 
     $ composer require groovey/seeder
