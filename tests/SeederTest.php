@@ -10,7 +10,9 @@ use Groovey\Seeder\Commands\Run;
 
 class SeederTest extends PHPUnit_Framework_TestCase
 {
-    public function connect()
+    public $db;
+
+    public function setUp()
     {
         $capsule = new Capsule();
 
@@ -28,7 +30,7 @@ class SeederTest extends PHPUnit_Framework_TestCase
         $capsule->bootEloquent();
         $capsule->setAsGlobal();
 
-        return $capsule;
+        $this->db = $capsule;
     }
 
     public function testAbout()
@@ -40,7 +42,7 @@ class SeederTest extends PHPUnit_Framework_TestCase
 
     public function testInit()
     {
-        $container['db'] = $this->connect();
+        $container['db'] = $this->db;
 
         $tester = new Tester();
         $tester->command(new Init($container), 'seed:init');
@@ -51,7 +53,7 @@ class SeederTest extends PHPUnit_Framework_TestCase
     {
         Database::create();
 
-        $container['db'] = $this->connect();
+        $container['db'] = $this->db;
 
         $app = new Application();
         $app->add(new Run($container));

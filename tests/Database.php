@@ -13,6 +13,7 @@ class Database
         }
 
         DB::schema()->create('users', function ($table) {
+            $table->enum('status', ['active', 'inactive']);
             $table->increments('id');
             $table->string('name');
             $table->string('email');
