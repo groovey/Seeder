@@ -13,7 +13,7 @@ $capsule = new Capsule();
 $capsule->addConnection([
     'driver'    => 'mysql',
     'host'      => 'localhost',
-    'database'  => 'test',
+    'database'  => 'test_seeder',
     'username'  => 'root',
     'password'  => '',
     'charset'   => 'utf8',
@@ -33,6 +33,15 @@ $app->addCommands([
         new Groovey\Seeder\Commands\Init($container),
         new Groovey\Seeder\Commands\Create($container),
         new Groovey\Seeder\Commands\Run($container),
+        new Groovey\Migration\Commands\About(),
+        new Groovey\Migration\Commands\Init($container),
+        new Groovey\Migration\Commands\Reset($container),
+        new Groovey\Migration\Commands\Listing($container),
+        new Groovey\Migration\Commands\Drop($container),
+        new Groovey\Migration\Commands\Status($container),
+        new Groovey\Migration\Commands\Create($container),
+        new Groovey\Migration\Commands\Up($container),
+        new Groovey\Migration\Commands\Down($container),
     ]);
 
 $status = $app->run();
