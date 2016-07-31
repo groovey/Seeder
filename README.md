@@ -91,26 +91,25 @@ A sample working seeder class.
 
 class Test extends Seeder
 {
-    public $table = 'test';
-
-    public function run()
+    public function init()
     {
         $faker = $this->faker;
 
-        $this->seed(function ($counter, $output) use ($faker) {
-
-            $faker->seed($counter);
-
+        $this->define('users', function () use ($faker) {
             return [
                 'name' => $faker->name,
-                'email' => $faker->email,
-                'created_at' => $faker->dateTimeThisMonth(),
             ];
+        }, $truncate = true);
 
-        }, 100, $truncate = true);
+    }
+
+    public function run()
+    {
+        $this->seed(function ($counter){
+            $this->factory('users')->create();
+        });
 
         return;
     }
 }
-
 ```
