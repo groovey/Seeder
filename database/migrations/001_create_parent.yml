@@ -5,18 +5,12 @@
 UP: >
 
     CREATE TABLE `parent` (
-    `id` int(11) NOT NULL,
-    `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
-    `created_at` datetime NOT NULL,
-    `modified_at` datetime NOT NULL
+    `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+    `name` varchar(200) NOT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-    ALTER TABLE `parent` ADD KEY `id` (`id`);
-
-    ALTER TABLE `parent` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
 
 
 # Reverse the migration
 DOWN: >
 
-    DROP TABLE parent;
+    DROP TABLE `parent`;
