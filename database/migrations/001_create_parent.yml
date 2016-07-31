@@ -1,0 +1,22 @@
+# Author: Groovey
+# Date: 2016-06-26 17:27:05
+
+# Run the migration
+UP: >
+
+    CREATE TABLE `parent` (
+    `id` int(11) NOT NULL,
+    `name` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+    `created_at` datetime NOT NULL,
+    `modified_at` datetime NOT NULL
+    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+    ALTER TABLE `parent` ADD KEY `id` (`id`);
+
+    ALTER TABLE `parent` CHANGE `id` `id` INT(11) NOT NULL AUTO_INCREMENT;
+
+
+# Reverse the migration
+DOWN: >
+
+    DROP TABLE parent;
