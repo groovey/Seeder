@@ -3,46 +3,41 @@
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Helper\ProgressBar;
 
-class Seeder
+class Seeder extends Factory
 {
-    public $table;
     public $faker;
     public $output;
     public $app;
+    public $total;
 
     public function __construct()
     {
-        $this->faker = Faker\Factory::create();
+        $this->faker = Faker\Factory::create('en_US');
     }
 
-    public function inject(OutputInterface $output, $app)
+    public function inject(OutputInterface $output, $app, $total = 1)
     {
         $this->output = $output;
         $this->app    = $app;
+        $this->total  = $total;
     }
 
-    public function seed($func, $total = 1, $truncate = false)
+    public function seed($func)
     {
         $app      = $this->app;
-        $progress = new ProgressBar($this->output, $total);
+        $total    = $this->total;
+        $output   = $this->output;
+        $progress = new ProgressBar($output, $total);
 
-        if ($truncate) {
-            $app['db']->table($this->table)->truncate();
-
-            $this->output->writeln('<info>Truncated table.</info>');
-        }
+        $this->truncate($output, $app);
 
         $this->output->writeln('<info>Start seeding.</info>');
 
         $progress->start();
 
-        $cnt = 0;
-        while ($cnt++ < $total) {
-            $data = $func($cnt, $this->output);
-
-            $app['db']->table($this->table)->insert(
-                $data
-            );
+        $counter = 0;
+        while ($counter++ < $total) {
+            $data = $func($counter);
 
             $progress->advance();
         }

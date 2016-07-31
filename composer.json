@@ -18,7 +18,8 @@
         "illuminate/events": "~5.2",
         "twig/twig" : "~1.24",
         "fzaninotto/faker": "~1.6",
-        "groovey/migration": "dev-master"
+        "groovey/migration": "dev-master",
+        "groovey/support" : "dev-master"
     },
     "autoload": {
         "psr-4": {

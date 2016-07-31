@@ -25,7 +25,12 @@ class Run extends Command
             ->addArgument(
                 'class',
                 InputArgument::REQUIRED,
-                'Runs the class task.'
+                'Runs the seeder class task.'
+            )
+            ->addArgument(
+                'total',
+                InputArgument::OPTIONAL,
+                'Total number of records to be seeded otherwise default value is 1.'
             )
         ;
     }
@@ -33,6 +38,7 @@ class Run extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $class    = $input->getArgument('class');
+        $total    = $input->getArgument('total');
         $fs       = new Filesystem();
         $filename = getcwd()."/database/seeds/{$class}.php";
 
@@ -42,12 +48,14 @@ class Run extends Command
             return;
         }
 
+        include_once __DIR__.'/../Factory.php';
         include_once __DIR__.'/../Seeder.php';
         include_once $filename;
 
         $instance = new $class();
 
-        $instance->inject($output, $this->app);
+        $instance->inject($output, $this->app, coalesce($total, 1));
+        $instance->init();
         $instance->run();
     }
 }
