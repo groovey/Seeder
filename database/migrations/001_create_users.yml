@@ -2,8 +2,6 @@ date: '2016-06-26 17:27:05'
 author: Groovey
 description: User information
 
-
-
 up: >
 
     CREATE TABLE `users` (
