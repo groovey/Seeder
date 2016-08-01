@@ -9,7 +9,7 @@ up: >
     `user_id` int(11) NOT NULL,
     `title` varchar(255) NOT NULL,
     `content` TEXT NOT NULL
-    ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 down: >
 
