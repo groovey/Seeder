@@ -12,9 +12,9 @@ class UsersPost extends Seeder
             ];
         }, $truncate = true);
 
-        $this->define('posts', function ($fk) use ($faker) {
+        $this->define('posts', function ($data) use ($faker) {
             return [
-                'user_id' => $fk->user_id,
+                'user_id' => $data->user_id,
                 'title'   => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'content' => $faker->realText(500),
             ];
@@ -26,11 +26,11 @@ class UsersPost extends Seeder
         $this->seed(function ($counter){
 
             $user_id = $this->factory('users')->create();
-            $fk      = ['user_id' => $user_id];
+            $data    = ['user_id' => $user_id];
             $random  = rand(1,10);
 
             for ($i=0; $i < $random; $i++) {
-                $this->factory('posts')->create($fk);
+                $this->factory('posts')->create($data);
             }
         });
 

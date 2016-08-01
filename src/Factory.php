@@ -24,7 +24,7 @@ class Factory
         return $this;
     }
 
-    public function create(array $fk = [])
+    public function create(array $data = [])
     {
         $app      = $this->app;
         $output   = $this->output;
@@ -33,10 +33,10 @@ class Factory
         $table    = element('table', $factory, $name);
         $truncate = element('truncate', $factory);
         $func     = element('function', $factory);
-        $data     = $func((object) $fk);
+        $records  = $func((object) $data);
 
         return $app['db']->table($table)->insertGetId(
-                $data
+                $records
             );
     }
 
