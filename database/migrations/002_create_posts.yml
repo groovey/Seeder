@@ -1,8 +1,9 @@
-# Author: Groovey
-# Date: 2016-06-26 17:27:05
+author: Groovey
+date: '2016-06-26 17:27:05'
+description: Post articles
 
-# Run the migration
-UP: >
+
+up: >
 
     CREATE TABLE `posts` (
     `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
@@ -11,7 +12,6 @@ UP: >
     `content` TEXT NOT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-# Reverse the migration
-DOWN: >
+down: >
 
     DROP TABLE `posts`;

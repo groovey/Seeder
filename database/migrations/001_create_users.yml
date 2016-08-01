@@ -1,16 +1,17 @@
-# Author: Groovey
-# Date: 2016-06-26 17:27:05
+date: '2016-06-26 17:27:05'
+author: Groovey
+description: User information
 
-# Run the migration
-UP: >
+
+
+up: >
 
     CREATE TABLE `users` (
     `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
     `name` varchar(200) NOT NULL
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-
 # Reverse the migration
-DOWN: >
+down: >
 
     DROP TABLE `users`;
