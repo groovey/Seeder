@@ -30,7 +30,7 @@ $capsule = new Capsule();
 $capsule->addConnection([
     'driver'    => 'mysql',
     'host'      => 'localhost',
-    'database'  => 'test',
+    'database'  => 'test_seeder',
     'username'  => 'root',
     'password'  => '',
     'charset'   => 'utf8',
