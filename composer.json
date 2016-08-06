@@ -2,7 +2,7 @@
     "name": "groovey/seeder",
     "description": "Groovey Seeder Package.",
     "license": "MIT",
-    "keywords": ["groovey", "framework", "simple", "seeder", "mysql"],
+    "keywords": ["silex", "groovey"],
     "authors": [
         {
             "name": "Harold Kim Cantil",
