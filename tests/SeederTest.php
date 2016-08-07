@@ -1,11 +1,10 @@
 <?php
 
-use Illuminate\Database\Capsule\Manager as Capsule;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
-use Symfony\Component\Console\Command\Command;
+use Silex\Application;
+use Groovey\DB\Providers\DBServiceProvider;
+use Groovey\Tester\Providers\TesterServiceProvider;
+use Groovey\Seeder\Commands\Init as SeederInit;
 use Groovey\Seeder\Commands\About;
-use Groovey\Seeder\Commands\Init;
 use Groovey\Seeder\Commands\Run;
 use Groovey\Migration\Commands\Init as MigrationInit;
 use Groovey\Migration\Commands\Status;
@@ -15,101 +14,85 @@ use Groovey\Migration\Commands\Drop;
 
 class SeederTest extends PHPUnit_Framework_TestCase
 {
-    public $db;
+    public $app;
 
     public function setUp()
     {
-        $capsule = new Capsule();
+        $app = new Application();
+        $app['debug'] = true;
 
-        $capsule->addConnection([
-            'driver'    => 'mysql',
-            'host'      => 'localhost',
-            'database'  => 'test_seeder',
-            'username'  => 'root',
-            'password'  => '',
-            'charset'   => 'utf8',
-            'collation' => 'utf8_general_ci',
-            'prefix'    => '',
-        ], 'default');
+        $app->register(new TesterServiceProvider());
 
-        $capsule->bootEloquent();
-        $capsule->setAsGlobal();
+        $app->register(new DBServiceProvider(), [
+            'db.connection' => [
+                'host'      => 'localhost',
+                'driver'    => 'mysql',
+                'database'  => 'test_migration',
+                'username'  => 'root',
+                'password'  => '',
+                'charset'   => 'utf8',
+                'collation' => 'utf8_unicode_ci',
+                'prefix'    => '',
+                'logging'   => true,
+            ],
+        ]);
 
-        $this->db = $capsule;
+        $app['tester']->add([
+                new MigrationInit($app),
+                new Status($app),
+                new Up($app),
+                new SeederInit($app),
+                new About(),
+                new Run($app),
+                new Down($app),
+                new Drop($app),
+            ]);
+
+        $this->app = $app;
     }
 
-    /**
-     * -------------------------------------------------------------------------
-     * Migration Start
-     * -------------------------------------------------------------------------.
-     */
     public function testMigrationInit()
     {
-        $container['db'] = $this->db;
-
-        $tester = new Tester();
-        $tester->command(new MigrationInit($container), 'migrate:init');
-        $this->assertRegExp('/Sucessfully/', $tester->getDisplay());
+        $app = $this->app;
+        $display = $app['tester']->command('migrate:init')->execute()->display();
+        $this->assertRegExp('/Sucessfully/', $display);
     }
 
     public function testMigrationStatus()
     {
-        $container['db'] = $this->db;
-
-        $tester = new Tester();
-        $tester->command(new Status($container), 'migrate:status');
-        $this->assertRegExp('/Unmigrated SQL/', $tester->getDisplay());
-        $this->assertRegExp('/001_create_users.yml/', $tester->getDisplay());
-        $this->assertRegExp('/002_create_posts.yml/', $tester->getDisplay());
+        $app = $this->app;
+        $display = $app['tester']->command('migrate:status')->execute()->display();
+        $this->assertRegExp('/Unmigrated SQL/', $display);
+        $this->assertRegExp('/001_create_users.yml/', $display);
+        $this->assertRegExp('/002_create_posts.yml/', $display);
     }
 
     public function testMigrationUp()
     {
-        $container['db'] = $this->db;
-
-        $tester = new Tester();
-        $tester->command(new Up($container), 'migrate:up');
-
-        $this->assertRegExp('/Running migration file/', $tester->getDisplay());
+        $app = $this->app;
+        $display = $app['tester']->command('migrate:up')->execute()->display();
+        $this->assertRegExp('/Running migration file/', $display);
     }
 
-    /**
-     * -------------------------------------------------------------------------
-     * Seeder Test
-     * -------------------------------------------------------------------------.
-     */
     public function testSeederAbout()
     {
-        $tester = new Tester();
-        $tester->command(new About(), 'seed:about');
-        $this->assertRegExp('/Groovey/', $tester->getDisplay());
+        $app = $this->app;
+        $display = $app['tester']->command('seed:about')->execute()->display();
+        $this->assertRegExp('/Groovey/', $display);
     }
 
     public function testSeederInit()
     {
-        $container['db'] = $this->db;
-
-        $tester = new Tester();
-        $tester->command(new Init($container), 'seed:init');
-        $this->assertRegExp('/Sucessfully/', $tester->getDisplay());
+        $app = $this->app;
+        $display = $app['tester']->command('seed:init')->execute()->display();
+        $this->assertRegExp('/Sucessfully/', $display);
     }
 
     public function testSeederRun()
     {
-        $container['db'] = $this->db;
-
-        $app = new Application();
-        $app->add(new Run($container));
-        $command = $app->find('seed:run');
-        $tester = new CommandTester($command);
-
-        $tester->execute([
-                'command' => $command->getName(),
-                'class'   => 'UsersPost',
-                'total'   => 5,
-            ]);
-
-        $this->assertRegExp('/End seeding/', $tester->getDisplay());
+        $app = $this->app;
+        $display = $app['tester']->command('seed:run')->execute(['class' => 'UsersPost', 'total' => 5])->display();
+        $this->assertRegExp('/End seeding/', $display);
     }
 
     /**
@@ -119,22 +102,15 @@ class SeederTest extends PHPUnit_Framework_TestCase
      */
     public function testMigrationDown()
     {
-        $container['db'] = $this->db;
-
-        $tester = new Tester();
-        $tester->command(new Down($container), 'migrate:down', 'Y\n');
-        $this->assertRegExp('/Downgrading migration file/', $tester->getDisplay());
-
-        $tester->command(new Down($container), 'migrate:down', 'Y\n');
-        $this->assertRegExp('/Downgrading migration file/', $tester->getDisplay());
+        $app = $this->app;
+        $display = $app['tester']->command('migrate:down')->input('Y\n')->execute(['version' => '001'])->display();
+        $this->assertRegExp('/Downgrading migration file/', $display);
     }
 
     public function testMigrationDrop()
     {
-        $container['db'] = $this->db;
-
-        $tester = new Tester();
-        $tester->command(new Drop($container), 'migrate:drop', 'Y\n');
-        $this->assertRegExp('/Migrations table has been deleted/', $tester->getDisplay());
+        $app = $this->app;
+        $display = $app['tester']->command('migrate:drop')->input('Y\n')->execute()->display();
+        $this->assertRegExp('/Migrations table has been deleted/', $display);
     }
 }

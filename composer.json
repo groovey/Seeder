@@ -10,16 +10,16 @@
         }
     ],
     "require": {
+        "silex/silex" : "~2.0",
         "symfony/console": "~3.0",
         "symfony/finder": "~3.0",
         "symfony/yaml"  : "~3.0",
         "symfony/filesystem": "~3.0",
-        "illuminate/database" : "~5.2",
-        "illuminate/events": "~5.2",
-        "twig/twig" : "~1.24",
         "fzaninotto/faker": "~1.6",
+        "groovey/db" : "dev-master",
         "groovey/migration": "dev-master",
-        "groovey/support" : "dev-master"
+        "groovey/support" : "dev-master",
+        "groovey/tester" : "dev-master"
     },
     "autoload": {
         "psr-4": {
