@@ -32,7 +32,7 @@ class About extends Command
  \____/_/   \____/\____/|___/\___/\__, /
                                  /____/
  </comment>
- Project Name: Groovey Seeder
+ Package Name: Groovey Seeder
  Git: https://github.com/groovey/seeder
  Author: Harold Kim Cantil <pokoot@gmail.com>
 
