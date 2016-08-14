@@ -62,9 +62,9 @@ class SeederTest extends PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $display = $app['tester']->command('migrate:status')->execute()->display();
-        $this->assertRegExp('/Unmigrated SQL/', $display);
-        $this->assertRegExp('/001_create_users.yml/', $display);
-        $this->assertRegExp('/002_create_posts.yml/', $display);
+        $this->assertRegExp('/Unmigrated YML/', $display);
+        $this->assertRegExp('/001.yml/', $display);
+        $this->assertRegExp('/002.yml/', $display);
     }
 
     public function testMigrationUp()
