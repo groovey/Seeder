@@ -7,6 +7,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Groovey\Support\Output;
 
 class Init extends Command
 {
@@ -29,6 +30,7 @@ class Init extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $fs     = new Filesystem();
+        $output = Output::style($output);
         $folder = getcwd().'/database/seeds';
 
         try {
@@ -40,9 +42,9 @@ class Init extends Command
         }
 
         if (file_exists($folder) && is_dir($folder)) {
-            $output->writeln("<comment>Place all your seeder files in ($folder)</comment>");
+            $output->writeln('<highlight>Sucessfully created seeder folder.</highlight>');
+            $output->writeln('<info>Place all your seeder files in:</info>');
+            $output->writeln("<comment>$folder</comment>");
         }
-
-        $output->writeln('<info>Sucessfully created seeder folder.</info>');
     }
 }

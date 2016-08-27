@@ -1,6 +1,6 @@
 <?php
 
-class UsersPost extends Seeder
+class UsersPosts extends Seeder
 {
     public function init()
     {
@@ -33,7 +33,5 @@ class UsersPost extends Seeder
                 $this->factory('posts')->create($data);
             }
         });
-
-        return;
     }
 }

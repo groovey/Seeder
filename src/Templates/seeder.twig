@@ -1,0 +1,22 @@
+<?php
+
+class {{class}} extends Seeder
+{
+    public function init()
+    {
+        $faker = $this->faker;
+
+        $this->define('{{table}}', function ($data) use ($faker) {
+            return [
+                'name' => $faker->name,
+            ];
+        }, $truncate = true);
+    }
+
+    public function run()
+    {
+        $this->seed(function ($counter){
+            $this->factory('{{table}}')->create();
+        });
+    }
+}

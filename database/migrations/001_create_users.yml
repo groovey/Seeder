@@ -4,6 +4,8 @@ changelog: User information.
 
 up: >
 
+    DROP TABLE IF EXISTS users;
+
     CREATE TABLE `users` (
     `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
     `name` varchar(200) NOT NULL

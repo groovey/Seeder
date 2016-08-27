@@ -4,6 +4,8 @@ changelog: Post articles.
 
 up: >
 
+    DROP TABLE IF EXISTS posts;
+
     CREATE TABLE `posts` (
     `id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
     `user_id` int(11) NOT NULL,

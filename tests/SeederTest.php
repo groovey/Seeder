@@ -27,7 +27,7 @@ class SeederTest extends PHPUnit_Framework_TestCase
             'db.connection' => [
                 'host'      => 'localhost',
                 'driver'    => 'mysql',
-                'database'  => 'test_migration',
+                'database'  => 'test_seeder',
                 'username'  => 'root',
                 'password'  => '',
                 'charset'   => 'utf8',
@@ -51,6 +51,11 @@ class SeederTest extends PHPUnit_Framework_TestCase
         $this->app = $app;
     }
 
+    /**
+     * -------------------------------------------------------------------------
+     * Migration - Start
+     * -------------------------------------------------------------------------.
+     */
     public function testMigrationInit()
     {
         $app = $this->app;
@@ -62,16 +67,16 @@ class SeederTest extends PHPUnit_Framework_TestCase
     {
         $app = $this->app;
         $display = $app['tester']->command('migrate:status')->execute()->display();
-        $this->assertRegExp('/Unmigrated YML/', $display);
-        $this->assertRegExp('/001.yml/', $display);
-        $this->assertRegExp('/002.yml/', $display);
+        $this->assertRegExp('/001/', $display);
+        $this->assertRegExp('/002/', $display);
     }
 
     public function testMigrationUp()
     {
         $app = $this->app;
-        $display = $app['tester']->command('migrate:up')->execute()->display();
-        $this->assertRegExp('/Running migration file/', $display);
+        $display = $app['tester']->command('migrate:up')->input('Y\n')->execute()->display();
+        $this->assertRegExp('/001/', $display);
+        $this->assertRegExp('/002/', $display);
     }
 
     public function testSeederAbout()
@@ -81,6 +86,11 @@ class SeederTest extends PHPUnit_Framework_TestCase
         $this->assertRegExp('/Groovey/', $display);
     }
 
+    /**
+     * -------------------------------------------------------------------------
+     * Seeder
+     * -------------------------------------------------------------------------.
+     */
     public function testSeederInit()
     {
         $app = $this->app;
@@ -91,20 +101,21 @@ class SeederTest extends PHPUnit_Framework_TestCase
     public function testSeederRun()
     {
         $app = $this->app;
-        $display = $app['tester']->command('seed:run')->execute(['class' => 'UsersPost', 'total' => 5])->display();
+        $display = $app['tester']->command('seed:run')->input('Y\n')->execute(['class' => 'UsersPosts', 'total' => 5])->display();
         $this->assertRegExp('/End seeding/', $display);
     }
 
     /**
      * -------------------------------------------------------------------------
-     * Migration End
+     * Migration - End
      * -------------------------------------------------------------------------.
      */
     public function testMigrationDown()
     {
         $app = $this->app;
         $display = $app['tester']->command('migrate:down')->input('Y\n')->execute(['version' => '001'])->display();
-        $this->assertRegExp('/Downgrading migration file/', $display);
+        $this->assertRegExp('/001/', $display);
+        $this->assertRegExp('/002/', $display);
     }
 
     public function testMigrationDrop()

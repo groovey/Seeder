@@ -6,7 +6,9 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Filesystem\Filesystem;
+use Groovey\Support\Output;
 
 class Run extends Command
 {
@@ -40,11 +42,22 @@ class Run extends Command
         $class    = $input->getArgument('class');
         $total    = $input->getArgument('total');
         $fs       = new Filesystem();
+        $output   = Output::style($output);
         $filename = getcwd()."/database/seeds/{$class}.php";
+        $helper   = $this->getHelper('question');
 
         if (!$fs->exists($filename)) {
             $output->writeln('<error>The seeder class does not exits.</error>');
 
+            return;
+        }
+
+        $output->writeln('<highlight>Running seeder file:</highlight>');
+        $output->writeln("<info>$filename</info>");
+
+        $question = new ConfirmationQuestion('<question>Are you sure you want to proceed? (Y/n):</question> ', false);
+
+        if (!$helper->ask($input, $output, $question)) {
             return;
         }
 
