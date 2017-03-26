@@ -22,37 +22,50 @@ set_time_limit(0);
 
 require_once __DIR__.'/vendor/autoload.php';
 
-use Symfony\Component\Console\Application;
-use Illuminate\Database\Capsule\Manager as Capsule;
-
-$capsule = new Capsule();
-
-$capsule->addConnection([
-    'driver'    => 'mysql',
-    'host'      => 'localhost',
-    'database'  => 'test_seeder',
-    'username'  => 'root',
-    'password'  => '',
-    'charset'   => 'utf8',
-    'collation' => 'utf8_general_ci',
-    'prefix'    => '',
-], 'default');
-
-$capsule->bootEloquent();
-$capsule->setAsGlobal();
-
-$container['db'] = $capsule;
+use Silex\Application;
+use Groovey\Console\Providers\ConsoleServiceProvider;
+use Groovey\DB\Providers\DBServiceProvider;
 
 $app = new Application();
 
-$app->addCommands([
-        new Groovey\Seeder\Commands\About(),
-        new Groovey\Seeder\Commands\Init($container),
-        new Groovey\Seeder\Commands\Create($container),
-        new Groovey\Seeder\Commands\Run($container),
+$app->register(new ConsoleServiceProvider(), [
+        'console.name'    => 'Groovey',
+        'console.version' => '1.0.0',
     ]);
 
-$status = $app->run();
+$app->register(new DBServiceProvider(), [
+        'db.connection' => [
+            'host'      => 'localhost',
+            'driver'    => 'mysql',
+            'database'  => 'test_seeder',
+            'username'  => 'root',
+            'password'  => '',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
+            'logging'   => true,
+        ],
+    ]);
+
+$console = $app['console'];
+
+$console->addCommands([
+        new Groovey\Seeder\Commands\About(),
+        new Groovey\Seeder\Commands\Init($app),
+        new Groovey\Seeder\Commands\Create($app),
+        new Groovey\Seeder\Commands\Run($app),
+        new Groovey\Migration\Commands\About(),
+        new Groovey\Migration\Commands\Init($app),
+        new Groovey\Migration\Commands\Reset($app),
+        new Groovey\Migration\Commands\Listing($app),
+        new Groovey\Migration\Commands\Drop($app),
+        new Groovey\Migration\Commands\Status($app),
+        new Groovey\Migration\Commands\Create($app),
+        new Groovey\Migration\Commands\Up($app),
+        new Groovey\Migration\Commands\Down($app),
+    ]);
+
+$status = $console->run();
 
 exit($status);
 ```

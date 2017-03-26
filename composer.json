@@ -16,6 +16,7 @@
         "symfony/yaml"  : "~3.0",
         "symfony/filesystem": "~3.0",
         "fzaninotto/faker": "~1.6",
+        "groovey/console" : "dev-master",
         "groovey/db" : "dev-master",
         "groovey/migration": "dev-master",
         "groovey/support" : "dev-master",
