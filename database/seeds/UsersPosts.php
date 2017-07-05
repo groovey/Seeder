@@ -25,9 +25,9 @@ class UsersPosts extends Seeder
     {
         $this->seed(function ($counter){
 
-            $user_id = $this->factory('users')->create();
-            $data    = ['user_id' => $user_id];
-            $random  = rand(1,10);
+            $userId = $this->factory('users')->create();
+            $data   = ['user_id' => $userId];
+            $random = rand(1,10);
 
             for ($i=0; $i < $random; $i++) {
                 $this->factory('posts')->create($data);
