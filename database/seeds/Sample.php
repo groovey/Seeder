@@ -1,12 +1,12 @@
 <?php
 
-class Hey extends Seeder
+class Sample extends Seeder
 {
     public function init()
     {
         $faker = $this->faker;
 
-        $this->define('hey', function ($data) use ($faker) {
+        $this->define('sample', function ($data) use ($faker) {
             return [
                 'name' => $faker->name,
             ];
@@ -16,7 +16,7 @@ class Hey extends Seeder
     public function run()
     {
         $this->seed(function ($counter){
-            $this->factory('hey')->create();
+            $this->factory('sample')->create();
         });
     }
 }
