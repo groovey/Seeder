@@ -15,7 +15,9 @@ class Sample extends Seeder
 
     public function run()
     {
-        $this->seed(function ($counter){
+        $this->seed(function ($counter) {
+
+            $this->output->writeln("Counter =  $counter");
             $this->factory('sample')->create();
         });
     }

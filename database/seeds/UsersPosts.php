@@ -23,13 +23,13 @@ class UsersPosts extends Seeder
 
     public function run()
     {
-        $this->seed(function ($counter){
+        $this->seed(function ($counter) {
 
             $userId = $this->factory('users')->create();
             $data   = ['user_id' => $userId];
-            $random = rand(1,10);
+            $random = rand(1, 10);
 
-            for ($i=0; $i < $random; $i++) {
+            for ($i = 0; $i < $random; ++$i) {
                 $this->factory('posts')->create($data);
             }
         });
