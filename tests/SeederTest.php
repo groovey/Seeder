@@ -7,6 +7,7 @@ use Groovey\Seeder\Commands\Init as SeederInit;
 use Groovey\Seeder\Commands\About;
 use Groovey\Seeder\Commands\Run;
 use Groovey\Migration\Commands\Init as MigrationInit;
+use Groovey\Migration\Commands\Reset;
 use Groovey\Migration\Commands\Status;
 use Groovey\Migration\Commands\Up;
 use Groovey\Migration\Commands\Down;
@@ -43,85 +44,33 @@ class SeederTest extends PHPUnit_Framework_TestCase
                 new Up($app),
                 new SeederInit($app),
                 new About(),
+                new Reset($app),
                 new Run($app),
                 new Down($app),
                 new Drop($app),
             ]);
 
+        Database::create($app);
+
         $this->app = $app;
     }
 
-    /**
-     * -------------------------------------------------------------------------
-     * Migration - Start
-     * -------------------------------------------------------------------------.
-     */
-    public function testMigrationInit()
+    public function tearDown()
     {
-        $app = $this->app;
-        $display = $app['tester']->command('migrate:init')->execute()->display();
-        $this->assertRegExp('/Sucessfully/', $display);
+        Database::drop($this->app);
     }
 
-    public function testMigrationStatus()
-    {
-        $app = $this->app;
-        $display = $app['tester']->command('migrate:status')->execute()->display();
-        $this->assertRegExp('/001/', $display);
-        $this->assertRegExp('/002/', $display);
-    }
-
-    public function testMigrationUp()
-    {
-        $app = $this->app;
-        $display = $app['tester']->command('migrate:up')->input('Y\n')->execute()->display();
-        $this->assertRegExp('/001/', $display);
-        $this->assertRegExp('/002/', $display);
-    }
-
-    public function testSeederAbout()
-    {
-        $app = $this->app;
-        $display = $app['tester']->command('seed:about')->execute()->display();
-        $this->assertRegExp('/Groovey/', $display);
-    }
-
-    /**
-     * -------------------------------------------------------------------------
-     * Seeder
-     * -------------------------------------------------------------------------.
-     */
     public function testSeederInit()
     {
-        $app = $this->app;
+        $app     = $this->app;
         $display = $app['tester']->command('seed:init')->execute()->display();
         $this->assertRegExp('/Sucessfully/', $display);
     }
 
     public function testSeederRun()
     {
-        $app = $this->app;
+        $app     = $this->app;
         $display = $app['tester']->command('seed:run')->input('Y\n')->execute(['class' => 'UsersPosts', 'total' => 5])->display();
         $this->assertRegExp('/End seeding/', $display);
-    }
-
-    /**
-     * -------------------------------------------------------------------------
-     * Migration - End
-     * -------------------------------------------------------------------------.
-     */
-    public function testMigrationDown()
-    {
-        $app = $this->app;
-        $display = $app['tester']->command('migrate:down')->input('Y\n')->execute(['version' => '001'])->display();
-        $this->assertRegExp('/001/', $display);
-        $this->assertRegExp('/002/', $display);
-    }
-
-    public function testMigrationDrop()
-    {
-        $app = $this->app;
-        $display = $app['tester']->command('migrate:drop')->input('Y\n')->execute()->display();
-        $this->assertRegExp('/Migrations table has been deleted/', $display);
     }
 }
