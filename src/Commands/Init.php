@@ -23,7 +23,7 @@ class Init extends Command
     {
         $this
             ->setName('seed:init')
-            ->setDescription('Setup your database/seeds directory.')
+            ->setDescription('Setup your database/seeds directory')
         ;
     }
 

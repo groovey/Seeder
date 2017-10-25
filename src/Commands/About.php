@@ -17,7 +17,7 @@ class About extends Command
     {
         $this
             ->setName('seed:about')
-            ->setDescription('Shows credits to the author.')
+            ->setDescription('Shows credits to the author')
         ;
     }
 

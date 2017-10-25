@@ -24,7 +24,7 @@ class Create extends Command
     {
         $this
             ->setName('seed:create')
-            ->setDescription('Creates a seeder class template.')
+            ->setDescription('Creates a seeder class template')
             ->addArgument(
                 'class',
                 InputArgument::REQUIRED,

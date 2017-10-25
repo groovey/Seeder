@@ -23,7 +23,7 @@ class Run extends Command
     {
         $this
             ->setName('seed:run')
-            ->setDescription('Runs the seeder.')
+            ->setDescription('Runs the seeder')
             ->addArgument(
                 'class',
                 InputArgument::REQUIRED,
